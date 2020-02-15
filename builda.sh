@@ -1,10 +1,15 @@
 #!/bin/bash
 gcc -g a.c
-echo "get origin file length"
+echo -n "get origin file length"
 binsize=`du -b a.out |cut -f1 `
-echo "append symbol"
+echo -n "...bin_size $binsize..." 
+echo "ok"
+echo -n "append symbol..."
 nm a.out >>a.out
-echo "append mark"
+echo "ok"
+echo -n "append mark..."
 echo KISS>>a.out
-echo "append origin length"
+echo "ok"
+echo -n "append origin length..."
 echo $binsize>>a.out
+echo "ok"

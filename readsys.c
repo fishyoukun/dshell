@@ -57,14 +57,13 @@ int get_exec_len(FILE *pfile,int compoundfilelen,int *exec_size,int *no_pad_len)
             
             fseek(pfile,0,SEEK_CUR);
             pos = ftell(pfile);
-            printf("pos %d\n",pos);
+            //printf("pos %d\n",pos);
             found = 1;            
             continue;
         }
         else {            
             if (found == 1) {                
                 bin_size = strtol(buff,NULL,10);
-                found = 0;
                 break;
             }
         }         
