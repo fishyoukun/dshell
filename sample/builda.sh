@@ -13,3 +13,6 @@ echo "ok"
 echo -n "append origin length..."
 echo $binsize>>a.out
 echo "ok"
+echo -n "copy a.out..."
+cp a.out ../utils/
+echo "ok"

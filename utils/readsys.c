@@ -19,8 +19,6 @@ int get_exec_len(FILE*pfile,int compoundfilelen,int *exec_size,int *no_pad_len);
 
 int main()
 {   
-    #define version(x,y) #x #y
-
     int symbol_count;
     Tsym * symbol_list;
     symbol_list = malloc(sizeof(Tsym)*SYMBOL_LIST_MAX);
