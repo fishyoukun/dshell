@@ -6,6 +6,7 @@
 #define LINE_MAX 100
 #define SYMBOL_NAME_MAX 80
 #define FILETAIL 16
+#define MARK "KISS"
 typedef struct {
     void *addr;
     char type;
@@ -28,6 +29,7 @@ int main()
     }
     parse_sysfile("a.out",symbol_list,&symbol_count);
     printsym(symbol_list,symbol_count);    
+
     return 0;
 }
 /*
@@ -38,21 +40,20 @@ int get_exec_len(FILE *pfile,int compoundfilelen,int *exec_size,int *no_pad_len)
     char buff[LINE_MAX];
     unsigned int found = 0;
     int bin_size = 0;
-    char mark[] = "KISS";
+    char mark[] = MARK;
     int pos;
 
     fseek(pfile,-FILETAIL,SEEK_END);
 
     while (fgets(buff,LINE_MAX,pfile) != NULL){
-
-        //printf("line: %s\n",buff); 
-          
-        if ((buff[0] != 'K') && (found != 1)) {
+        //printf("line: %s\n",buff);           
+        if ((buff[0] != mark[0]) && (found != 1)) {
             found = 0;            
             continue;
         }
-        else if ((buff[0] == 'K') && (buff[1] == 'I') && (buff[2] == 'S') && (buff[3] == 'S')){
-            
+        //else if ((buff[0] == 'K') && (buff[1] == 'I') && (buff[2] == 'S') && (buff[3] == 'S')){
+        else if ((buff[0] == mark[0]) && (buff[1] == mark[1]) 
+            && (buff[2] == mark[2]) && (buff[3] == mark[3])){
             fseek(pfile,0,SEEK_CUR);
             pos = ftell(pfile);
             //printf("pos %d\n",pos);
@@ -66,6 +67,10 @@ int get_exec_len(FILE *pfile,int compoundfilelen,int *exec_size,int *no_pad_len)
             }
         }         
                 
+    }
+    if (found == 0) {
+        printf("MARK not found!\n");
+        return -7;
     }
     *exec_size = bin_size;
     *no_pad_len = pos - sizeof(mark);
