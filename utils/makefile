@@ -14,14 +14,15 @@ TARGET = tool.out
 SOURCES = $(wildcard *.c)
 OBJS = $(patsubst %.c,%.o,$(SOURCES))
 
-
-$(TARGET) :$(OBJS)
-	$(CC) $(OBJS) -o $(TARGET)
+agent : readsys.o
+	$(CC) readsys.o -o agent
+dshell : dshell.o
+	$(CC) dshell.o -o dshell
 
 .PHONY: clean all
 clean:	
-	rm $(OBJS) $(TARGET)
+	rm -f $(OBJS) dshell agent
 
-all: clean $(TARGET)
+all: clean agent dshell
 
 
