@@ -66,15 +66,13 @@ int main()
                 connected = 1;
                 printf("create connection successfully\n");
             }
-        } else {
-            
+        } else {            
             int error = send(client_sockfd, buf, strlen(buf), 0);
             printf("%d\n", error);
             if ((numbytes = recv(client_sockfd, buf, MAXDATASIZE, 0)) == -1){  
                 perror("recv"); 
                 exit(1);
-            } else if (numbytes > 0) { 
-                int len, bytes_sent;
+            } else if (numbytes > 0) {                 
                 buf[numbytes] = '\0'; 
                 printf("Received: %s\n",buf);
             }

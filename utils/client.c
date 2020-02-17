@@ -13,6 +13,9 @@
 #define MAXDATASIZE 100  
 #define SERVER_IP "127.0.0.1" 
 
+
+int readinput(char *buf);
+
 int main() { 
     int sockfd, numbytes; 
     char buf[MAXDATASIZE]; 
@@ -46,7 +49,8 @@ int main() {
             printf("Received: %s\n",buf);
             printf("Send:"); 
             char msg[100];
-            scanf("%[^\n]%*c",msg);
+            //scanf("%[^\n]%*c",msg);
+            readinput(msg);
             len = strlen(msg); 
             //sent to the server
             if(send(sockfd, msg,len,0) == -1){ 
@@ -57,6 +61,18 @@ int main() {
             break;
         } 
     }  
-        close(sockfd); 
-        return 0;
+    close(sockfd); 
+    return 0;
+}
+
+int readinput(char *buf)
+{
+    int count = 0;
+    char c;
+    while ((c = getchar() )!= '\n') {
+            buf[count] = c;
+            count++;
     }
+    buf[count] = '\0';
+    return 0;
+}

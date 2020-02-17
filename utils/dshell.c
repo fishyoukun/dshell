@@ -7,7 +7,7 @@
 int printwc();
 int captureinput();
 void signal_process(int sigID);
-do_exection(char *command);
+int do_exection(char *command);
 
 char inputbuff[80];
 typedef int (*FUNC)();
@@ -50,9 +50,10 @@ int printwc()
     return 0;
 
 }
-do_exection(char *command)
+int do_exection(char *command)
 {
-
+    printf("$$ command %s,len %ld\n",command,strlen(command));
+    return 0;
 }
 void signal_process(int sigID)
 {
@@ -60,23 +61,27 @@ void signal_process(int sigID)
     abort();
     return;
 }
+int readinput(char *buf)
+{
+    int count = 0;
+    char c;
+    while ((c = getchar() )!= '\n') {
+            buf[count] = c;
+            count++;
+    }
+    buf[count] = '\0';
+    return 0;
 
+}
 
 int captureinput()
 {    
-    char c;
-    int count = 0;    
+    char c;  
     memset(inputbuff,0,sizeof(inputbuff));
     while(1) {
-        printf("$$ ");
-        
-        while ((c = getchar() )!= '\n') {
-            inputbuff[count] = c;
-            count++;
-        }
-        inputbuff[count] = '\0';
-        count = 0;
-        printf("$$ input: %s\n",inputbuff);
+        printf("$$ ");        
+        readinput(&inputbuff[0]);
+        do_exection(&inputbuff[0]);        
     }
     return 0;
 }
