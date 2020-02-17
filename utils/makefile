@@ -19,10 +19,16 @@ agent : readsys.o
 dshell : dshell.o
 	$(CC) dshell.o -o dshell
 
+server : server.o
+	$(CC) server.o -o server
+
+client : client.o
+	$(CC) client.o -o client
+
 .PHONY: clean all
 clean:	
-	rm -f $(OBJS) dshell agent
+	rm -f $(OBJS) dshell agent server client
 
-all: clean agent dshell
+all: clean agent dshell server client
 
 

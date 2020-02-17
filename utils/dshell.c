@@ -41,7 +41,7 @@ int printwc()
 }
 void signal_process(int sigID)
 {
-    printf("hello\n");
+    printf("dshell abort\n");
     abort();
     return;
 }
@@ -53,9 +53,9 @@ int captureinput()
     memset(inputbuff,0,sizeof(inputbuff));
     while(1) {
         printf("$$ ");
-        scanf("%s",&inputbuff[0]);       
+        scanf("%[^\n]%*c",&inputbuff[0]);       
         printf("$$ input: %s\n",inputbuff);
-        sleep(1);
+
     }
 
 
