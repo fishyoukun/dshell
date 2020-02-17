@@ -53,11 +53,14 @@ int printwc()
 int do_exection(char *command)
 {
     
-    if (!strcmp(command,"quit"))
-        abort();
+    if ((!strcmp(command,"quit")) || (!strcmp(command,"exit")))
+    {
+        printf("quit dshell\n");
+        exit(0);
+    }
     else
         printf("$$ command %s,len %ld\n",command,strlen(command));
-        
+
     return 0;
 }
 void signal_process(int sigID)
