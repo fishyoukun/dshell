@@ -52,7 +52,12 @@ int printwc()
 }
 int do_exection(char *command)
 {
-    printf("$$ command %s,len %ld\n",command,strlen(command));
+    
+    if (!strcmp(command,"quit"))
+        abort();
+    else
+        printf("$$ command %s,len %ld\n",command,strlen(command));
+        
     return 0;
 }
 void signal_process(int sigID)
