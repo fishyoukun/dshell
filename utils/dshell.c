@@ -8,8 +8,13 @@ int printwc();
 int captureinput();
 void signal_process(int sigID);
 int do_exection(char *command);
+int read_filename();
 
+#define MAX_LEN 80
 char inputbuff[80];
+
+char filename[MAX_LEN];
+
 typedef int (*FUNC)();
 int func0()
 {   
@@ -38,10 +43,31 @@ int main()
     pfun = &func1;
     pfun(3);
     pfun = &func2;
-    pfun(2,5);     
+    pfun(2,5);   
+    read_filename();  
     printwc();
     captureinput();    
     return 0;
+}
+int read_filename()
+{
+    int cnt = readlink("/proc/self/exe", filename, MAX_LEN);
+    if (cnt < 0 || cnt >= MAX_LEN)
+    {
+        printf("***Error***\n");
+        exit(-1);
+    }
+    /*
+    for (int i = cnt; i >=0; --i)
+    {
+        if (filename[i] == '/')
+        {
+            filename[i+1] = '\0';
+            break;
+        }
+    }
+    */
+    printf("current absolute path:%s\n", filename);
 }
 
 int printwc()
