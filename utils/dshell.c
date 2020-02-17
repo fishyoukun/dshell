@@ -7,36 +7,51 @@
 int printwc();
 int captureinput();
 void signal_process(int sigID);
-char oldPS1[80];
+do_exection(char *command);
+
+char inputbuff[80];
+typedef int (*FUNC)();
+int func0()
+{   
+    printf("func0 called\n");
+    return 0;
+}
+
+int func1(int a)
+{   
+    printf("func1 called para1 %d\n",a);
+    return 0;
+}
+int func2(int a,int b)
+{   
+    printf("func2 called para1 %d,para2 %d\n",a,b);
+    return 0;
+}
+
 int main()
 {
     signal(SIGINT,signal_process);
-    #if 0
-    memset(oldPS1,0,sizeof(oldPS1));
-    
-    char *p = getenv("PS1");
-    if (p == NULL) {
-        printf("getenv error\n");
-        return -2;
-    }
-    printf("%s \n",p);
-    
-    strncpy(oldPS1,p,sizeof(oldPS1));
-    #endif
-    
-    
+
+    FUNC pfun = NULL;
+    pfun = &func0;
+    pfun();
+    pfun = &func1;
+    pfun(3);
+    pfun = &func2;
+    pfun(2,5);     
     printwc();
-    captureinput();
-    
+    captureinput();    
     return 0;
-
-
 }
 
 int printwc()
 {
     printf("welcome to dshell\n");
     return 0;
+
+}
+do_exection(char *command)
+{
 
 }
 void signal_process(int sigID)
@@ -46,18 +61,22 @@ void signal_process(int sigID)
     return;
 }
 
+
 int captureinput()
-{
-    char inputbuff[80];
-    
+{    
+    char c;
+    int count = 0;    
     memset(inputbuff,0,sizeof(inputbuff));
     while(1) {
         printf("$$ ");
-        scanf("%[^\n]%*c",&inputbuff[0]);       
+        
+        while ((c = getchar() )!= '\n') {
+            inputbuff[count] = c;
+            count++;
+        }
+        inputbuff[count] = '\0';
+        count = 0;
         printf("$$ input: %s\n",inputbuff);
-
     }
-
-
-
+    return 0;
 }
