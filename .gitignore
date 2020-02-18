@@ -52,3 +52,4 @@ dkms.conf
 
 # mac auxiliary file
 .DS_Store
+.vscode
