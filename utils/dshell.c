@@ -57,17 +57,9 @@ int read_filename()
         printf("***Error***\n");
         exit(-1);
     }
-    /*
-    for (int i = cnt; i >=0; --i)
-    {
-        if (filename[i] == '/')
-        {
-            filename[i+1] = '\0';
-            break;
-        }
-    }
-    */
+    
     printf("current absolute path:%s\n", filename);
+    return 0;
 }
 
 int printwc()

@@ -6,7 +6,7 @@ CUT = cut
 
 
 CFLAGS = -g
-TARGET = tool.out
+
 
 
 %.o:%.c
@@ -25,10 +25,23 @@ server : server.o
 client : client.o
 	$(CC) client.o -o client
 
+newthread : newthread.o
+	$(CC) newthread.o -o newthread -lpthread
+
+redirect : redirect.o
+	$(CC) redirect.o -o redirect
+
+Target := agent 
+Target += dshell
+Target += server
+Target += client
+Target += newthread
+Target += redirect
+
 .PHONY: clean all
 clean:	
-	rm -f $(OBJS) dshell agent server client
+	rm -f $(OBJS) $(Target)
 
-all: clean agent dshell server client
+all: clean $(Target)
 
 
