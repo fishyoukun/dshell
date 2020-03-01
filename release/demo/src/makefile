@@ -1,9 +1,3 @@
-CC = gcc
-CP = cp
-NM = nm
-DU = du
-CUT = cut
-
 PROJECT = demo
 
 CFLAGS = -g
@@ -17,7 +11,8 @@ OBJS = $(patsubst %.c,%.o,$(SOURCES))
 
 
 $(TARGET) :$(OBJS)
-	@$(CC) $(OBJS) -o $(TARGET) -L $(LIB_PATH)/ agent.a -lpthread
+	
+	$(CC) $(OBJS) -o $(TARGET) -L $(LIB_PATH) -lagent -lpthread
 
 .PHONY: post clean all
 post:
