@@ -1,5 +1,7 @@
 #include<stdio.h>
 #include <unistd.h>
+
+extern int dshell_init();
 int g;
 const int f = 0;
 static int s;
@@ -11,6 +13,7 @@ int func()
     printf("func called\n");
     return 0;
 }
+
 int dumphex(unsigned char *start,unsigned int length)
 {
     int i = 0;
@@ -37,12 +40,14 @@ int main()
     static int count;
     ft pf = NULL;
     pf = (ft )0x4005f6;
-    dumphex((unsigned char *)0x600000,0x1000);
-    dumphex((unsigned char *)0x400000,0x1000);
-    dumphex((unsigned char *)0x601000,0x1000);
+    dshell_init();
+    //dumphex((unsigned char *)0x600000,0x1000);
+    //dumphex((unsigned char *)0x400000,0x1000);
+    //dumphex((unsigned char *)0x601000,0x1000);
     while (1) {
     count++;
     g = count + 4;   
+    #if 0
     printf("=============begin================\n");
     printf("count = %d\n",count);
     printf("main %p\n",&main);
@@ -57,7 +62,8 @@ int main()
     
     pf();
     printf("=============end================\n");
-    sleep(10);
+    #endif
+    sleep(1);
     }
     return 0;
 }

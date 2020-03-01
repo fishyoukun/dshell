@@ -13,5 +13,5 @@ echo -n "append origin length..."
 echo $binsize>>$1
 echo "ok"
 echo -n "copy a.out..."
-cp $1 ../out/
+cp $1 ../../output/
 echo "ok"

@@ -4,7 +4,7 @@
 #include <pthread.h>
 #include <unistd.h> 
 
-#define SYMBOL_LIST_MAX 100
+#define SYMBOL_LIST_MAX 2048
 #define LINE_MAX 100
 #define SYMBOL_NAME_MAX 80
 #define FILETAIL 16
@@ -33,8 +33,9 @@ int parse_sym(char *buff,Tsym *p_parse_result,int *length);
 int printsym(Tsym *parse_sym,int len);
 int get_exec_len(FILE*pfile,int compoundfilelen,int *exec_size,int *no_pad_len);
 int do_exection(char *command);
+int read_filename(char *pfilename);
 
-int main()
+int dshell_init()
 {   
     int err;
     pthread_t ntid;
@@ -49,7 +50,8 @@ int main()
         printf("malloc fail,return\n");
         return -2;
     }
-    parse_sysfile("../out/demo.out",symbol_list,&symbol_count);
+    read_filename(filename);
+    parse_sysfile(filename,symbol_list,&symbol_count);
     //printsym(symbol_list,symbol_count);  
     while(1)
     {
@@ -168,16 +170,16 @@ int parse_sym(char *buff,Tsym *p_parse_result,int *length)
     *length = count;
     return 0;
 }
-int read_filename()
+int read_filename(char *pfilename)
 {
-    int cnt = readlink("/proc/self/exe", filename, MAX_LEN);
+    int cnt = readlink("/proc/self/exe", pfilename, MAX_LEN);
     if (cnt < 0 || cnt >= MAX_LEN)
     {
         printf("***Error***\n");
         exit(-1);
     }
     
-    printf("current absolute path:%s\n", filename);
+    printf("current absolute path:%s\n", pfilename);
     return 0;
 }
 
@@ -200,49 +202,56 @@ int parse_cmd(char *command)
 {
     t_FUNARGS funagrs;
     int begin,end,i;
+    int no_arg = 0;
     memset((char *)&funagrs,0x00,sizeof(funagrs));
     int len =  strlen(command);
-    for (i = 0;i < len;i++)
+    for (i = 0;i < len+1;i++)
     {
-        if (command[i] == ' ')
+        if ((command[i] == ' ') || (command[i] == '\0'))
         {
             memcpy(funagrs.fun_name,command,i);
+            if (command[i] == '\0')
+                no_arg = 1;
             break;
         }        
     }
-    //printf("i = %d\n",i);
-    begin = i + 1;
-    char buff[8];
-    int j = 0;
-    memset(buff,0,sizeof(buff));
-    for (i = begin;i <= len ;i++)
-    {
-        if (command[i] == ',')
+    if (no_arg != 1){
+        //printf("i = %d\n",i);
+        begin = i + 1;
+        char buff[8];
+        int j = 0;
+        memset(buff,0,sizeof(buff));
+        for (i = begin;i <= len+1 ;i++)
         {
-            printf("i = %d\n",i);
-            memcpy(buff,&(command[begin]),(i-begin));
-            
-            printf("buff %s\n",buff);
-            funagrs.arg[j] = strtol(buff,NULL,0);
-            begin = i+1;
-            j++;
-            continue;
+            if (command[i] == ',')
+            {
+                printf("i = %d\n",i);
+                memcpy(buff,&(command[begin]),(i-begin));
+                
+                printf("buff %s\n",buff);
+                funagrs.arg[j] = strtol(buff,NULL,0);
+                begin = i+1;
+                j++;
+                continue;
+            }
         }
-    }
 
-    printf("i = %d\n",i);
-    memcpy(buff,&(command[begin]),(len-begin));
-    
-    printf("buff %s\n",buff);
-    funagrs.arg[j] = strtol(buff,NULL,0);
-    
-    j++;
-    printf("valid arg number %d\n",j);
+        //printf("i = %d\n",i);
+        memcpy(buff,&(command[begin]),(len-begin));
+        
+        //printf("buff %s\n",buff);
+        funagrs.arg[j] = strtol(buff,NULL,0);
+        
+        j++;
+        printf("valid arg number %d\n",j);
 
-    printf("commmand %s \n",funagrs.fun_name);
-    for (i = 0;i < ARG_MAX;i++)
-    {
-        printf("arg[%d] %d \n",i,funagrs.arg[i]);
+        printf("commmand %s \n",funagrs.fun_name);
+        for (i = 0;i < ARG_MAX;i++)
+        {
+            printf("arg[%d] %d \n",i,funagrs.arg[i]);
+        }
+    } else {
+        printf("commmand %s \n",funagrs.fun_name);
     }
     return 0;
 }
@@ -257,7 +266,7 @@ int do_exection(char *command)
     else
     {
         printf("$$ command %s,len %ld\n",command,strlen(command));
-        //parse_cmd(command);       
+        parse_cmd(command);       
     }
 
     return 0;

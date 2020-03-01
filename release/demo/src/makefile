@@ -17,7 +17,7 @@ OBJS = $(patsubst %.c,%.o,$(SOURCES))
 
 
 $(TARGET) :$(OBJS)
-	@$(CC) $(OBJS) -o $(TARGET)
+	@$(CC) $(OBJS) -o $(TARGET) -L ./ agent.a -lpthread
 
 .PHONY: post clean all
 post:

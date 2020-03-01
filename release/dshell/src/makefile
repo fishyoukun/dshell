@@ -1,4 +1,5 @@
 CC = gcc
+AR = ar
 
 CFLAGS = -g
 
@@ -8,7 +9,7 @@ SOURCES = $(wildcard *.c)
 OBJS = $(patsubst %.c,%.o,$(SOURCES))
 
 agent : agent.o server.o
-	$(CC) agent.o server.o -o agent -lpthread
+	$(AR) cr agent.a agent.o server.o 
 dshell : dshell.o client.o
 	$(CC) dshell.o  client.o -o dshell -lpthread
 
