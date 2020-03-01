@@ -1,11 +1,11 @@
 0000000000602e18 d _DYNAMIC
 0000000000603000 d _GLOBAL_OFFSET_TABLE_
-0000000000401d90 R _IO_stdin_used
+0000000000401d70 R _IO_stdin_used
                  w _ITM_deregisterTMCloneTable
                  w _ITM_registerTMCloneTable
                  w _Jv_RegisterClasses
-00000000004022b0 r __FRAME_END__
-0000000000401fd4 r __GNU_EH_FRAME_HDR
+0000000000402290 r __FRAME_END__
+0000000000401fb4 r __GNU_EH_FRAME_HDR
 0000000000602e10 d __JCR_END__
 0000000000602e10 d __JCR_LIST__
 0000000000603138 D __TMC_END__
@@ -18,17 +18,17 @@
                  w __gmon_start__
 0000000000602e08 t __init_array_end
 0000000000602e00 t __init_array_start
-0000000000401d80 T __libc_csu_fini
-0000000000401d10 T __libc_csu_init
+0000000000401d60 T __libc_csu_fini
+0000000000401cf0 T __libc_csu_init
                  U __libc_start_main@@GLIBC_2.2.5
                  U __stack_chk_fail@@GLIBC_2.4
 0000000000603138 D _edata
 0000000000603210 B _end
-0000000000401d84 T _fini
+0000000000401d64 T _fini
 0000000000400b80 T _init
 0000000000400dc0 T _start
                  U accept@@GLIBC_2.2.5
-0000000000401dc0 R array
+0000000000401da0 R array
                  U bind@@GLIBC_2.2.5
 00000000006031c0 B commandbuff
 0000000000603140 b completed.7594
@@ -37,11 +37,11 @@
 0000000000603150 b count.4141
 0000000000603118 W data_start
 0000000000400df0 t deregister_tm_clones
-0000000000401977 T do_exection
+000000000040194d T do_exection
 0000000000400fde T dshell_init
 0000000000400ecb T dumphex
                  U exit@@GLIBC_2.2.5
-0000000000401da0 R f
+0000000000401d80 R f
                  U fclose@@GLIBC_2.2.5
                  U fgets@@GLIBC_2.2.5
 0000000000603160 B filename
@@ -76,7 +76,7 @@
                  U recv@@GLIBC_2.2.5
 0000000000400e30 t register_tm_clones
 0000000000603144 b s
-00000000004019f9 T server_process
+00000000004019cf T server_process
                  U setsockopt@@GLIBC_2.2.5
                  U sleep@@GLIBC_2.2.5
                  U socket@@GLIBC_2.2.5
