@@ -2,7 +2,7 @@ CFLAGS = -g
 
 
 %.o:%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 SOURCES = $(wildcard *.c)
 OBJS = $(patsubst %.c,%.o,$(SOURCES))
 
@@ -10,10 +10,12 @@ AGENT = libagent.a
 UTILITY = dshell
 
 $(AGENT) : agent.o server.o
-	$(AR) rcs $(AGENT) agent.o server.o 
+	@echo "build agent"
+	@$(AR) rcs $(AGENT) agent.o server.o 
 
 $(UTILITY) : dshell.o client.o
-	$(CC) dshell.o  client.o -o dshell -lpthread
+	@echo "build dshell"
+	@$(CC) dshell.o  client.o -o dshell -lpthread
 
 Target := $(AGENT)
 Target += $(UTILITY)

@@ -11,8 +11,8 @@ OBJS = $(patsubst %.c,%.o,$(SOURCES))
 
 
 $(TARGET) :$(OBJS)
-	
-	$(CC) $(OBJS) -o $(TARGET) -L $(LIB_PATH) -lagent -lpthread
+	@echo "build demo"
+	@$(CC) $(OBJS) -o $(TARGET) -L $(LIB_PATH) -lagent -lpthread
 
 .PHONY: post clean all
 post:
