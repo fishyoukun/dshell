@@ -1,89 +1,93 @@
 0000000000602e18 d _DYNAMIC
 0000000000603000 d _GLOBAL_OFFSET_TABLE_
-0000000000401d70 R _IO_stdin_used
+0000000000401f00 R _IO_stdin_used
                  w _ITM_deregisterTMCloneTable
                  w _ITM_registerTMCloneTable
                  w _Jv_RegisterClasses
-0000000000402290 r __FRAME_END__
-0000000000401fb4 r __GNU_EH_FRAME_HDR
+0000000000402468 r __FRAME_END__
+000000000040210c r __GNU_EH_FRAME_HDR
 0000000000602e10 d __JCR_END__
 0000000000602e10 d __JCR_LIST__
 0000000000603138 D __TMC_END__
-0000000000603138 B __bss_start
-0000000000603118 D __data_start
-0000000000400e70 t __do_global_dtors_aux
+0000000000603134 B __bss_start
+0000000000603120 D __data_start
+0000000000400ec0 t __do_global_dtors_aux
 0000000000602e08 t __do_global_dtors_aux_fini_array_entry
-0000000000603120 D __dso_handle
+0000000000603128 D __dso_handle
 0000000000602e00 t __frame_dummy_init_array_entry
                  w __gmon_start__
 0000000000602e08 t __init_array_end
 0000000000602e00 t __init_array_start
-0000000000401d60 T __libc_csu_fini
-0000000000401cf0 T __libc_csu_init
+0000000000401ef0 T __libc_csu_fini
+0000000000401e80 T __libc_csu_init
                  U __libc_start_main@@GLIBC_2.2.5
                  U __stack_chk_fail@@GLIBC_2.4
-0000000000603138 D _edata
-0000000000603210 B _end
-0000000000401d64 T _fini
-0000000000400b80 T _init
-0000000000400dc0 T _start
+0000000000603134 D _edata
+00000000006032d0 B _end
+0000000000401ef4 T _fini
+0000000000400bc0 T _init
+0000000000400e10 T _start
                  U accept@@GLIBC_2.2.5
-0000000000401da0 R array
+0000000000400f1b T add
                  U bind@@GLIBC_2.2.5
-00000000006031c0 B commandbuff
+0000000000603280 B commandbuff
 0000000000603140 b completed.7594
-0000000000603158 b connected.4072
-0000000000603148 b count.2911
-0000000000603150 b count.4141
-0000000000603118 W data_start
-0000000000400df0 t deregister_tm_clones
-000000000040194d T do_exection
-0000000000400fde T dshell_init
-0000000000400ecb T dumphex
+0000000000603210 b connected.4072
+0000000000603148 b count.2914
+0000000000603208 b count.4146
+0000000000603120 W data_start
+0000000000400e40 t deregister_tm_clones
+0000000000401955 T do_exection
+0000000000401056 T dshell_init
+0000000000400f53 T dumphex
                  U exit@@GLIBC_2.2.5
-0000000000401d80 R f
+0000000000401f04 R f
                  U fclose@@GLIBC_2.2.5
                  U fgets@@GLIBC_2.2.5
-0000000000603160 B filename
+0000000000603220 B filename
                  U fopen@@GLIBC_2.2.5
-0000000000400e90 t frame_dummy
+0000000000400ee0 t frame_dummy
                  U fseek@@GLIBC_2.2.5
                  U ftell@@GLIBC_2.2.5
-0000000000400eb6 T func
-000000000060315c B g
-00000000004010cf T get_exec_len
+0000000000603180 b funagrs
+0000000000400f06 T func
+0000000000603214 B g
+0000000000401152 T get_exec_len
                  U htonl@@GLIBC_2.2.5
                  U htons@@GLIBC_2.2.5
                  U listen@@GLIBC_2.2.5
-0000000000603128 D m
-0000000000400f79 T main
+0000000000603130 D m
+0000000000401001 T main
                  U malloc@@GLIBC_2.2.5
                  U memcpy@@GLIBC_2.14
                  U memset@@GLIBC_2.2.5
-000000000060314c B msg_process
-0000000000603154 B msg_recv_ok
-00000000004016c6 T parse_cmd
-000000000040140a T parse_sym
-0000000000401271 T parse_sysfile
+0000000000603160 B msg_process
+000000000060320c B msg_recv_ok
+0000000000401702 T parse_cmd
+000000000040145f T parse_sym
+00000000004012f4 T parse_sysfile
                  U perror@@GLIBC_2.2.5
                  U printf@@GLIBC_2.2.5
-00000000004015d2 T printsym
+000000000040160e T printsym
                  U pthread_create@@GLIBC_2.2.5
                  U putchar@@GLIBC_2.2.5
                  U puts@@GLIBC_2.2.5
-0000000000401570 T read_filename
+00000000004015c5 T read_filename
                  U readlink@@GLIBC_2.2.5
                  U recv@@GLIBC_2.2.5
-0000000000400e30 t register_tm_clones
+0000000000400e80 t register_tm_clones
+0000000000401ac4 T run_command
 0000000000603144 b s
-00000000004019cf T server_process
+00000000004019ee T search_command
+0000000000401b7c T server_process
                  U setsockopt@@GLIBC_2.2.5
                  U sleep@@GLIBC_2.2.5
                  U socket@@GLIBC_2.2.5
                  U strcmp@@GLIBC_2.2.5
                  U strcpy@@GLIBC_2.2.5
                  U strerror@@GLIBC_2.2.5
-0000000000603130 D string
                  U strlen@@GLIBC_2.2.5
+                 U strncmp@@GLIBC_2.2.5
                  U strtol@@GLIBC_2.2.5
                  U strtoull@@GLIBC_2.2.5
+0000000000603270 B symbol_list

@@ -78,7 +78,7 @@ void * server_process(void *args)
                 buf[numbytes] = '\0'; 
                 memcpy(commandbuff,buf,sizeof(buf));
                 msg_recv_ok = 1;
-                printf("Received: %s\n",buf);    
+                //printf("Received: %s\n",buf);    
                 sleep(1);            
             }
         }

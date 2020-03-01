@@ -18,13 +18,16 @@ typedef struct {
 #define ARG_MAX 9
 typedef struct
 {
-    char fun_name[20];
+    char fun_name[SYMBOL_NAME_MAX];
     int arg[ARG_MAX];
+    void *addr;
+    char type;
 }t_FUNARGS;
 
+typedef int (*FUNC)();
 extern void * server_process(void *args);
 extern int msg_recv_ok;
-char commandbuff[80];
+char commandbuff[MAX_LEN];
 char filename[MAX_LEN];
 int msg_process = 0;
 
@@ -34,7 +37,9 @@ int printsym(Tsym *parse_sym,int len);
 int get_exec_len(FILE*pfile,int compoundfilelen,int *exec_size,int *no_pad_len);
 int do_exection(char *command);
 int read_filename(char *pfilename);
-
+int search_command();
+int run_command();
+Tsym * symbol_list;
 int dshell_init()
 {   
     int err;
@@ -44,7 +49,7 @@ int dshell_init()
         printf("can't create thread: %s\n", strerror(err));
     
     int symbol_count;
-    Tsym * symbol_list;
+    
     symbol_list = malloc(sizeof(Tsym)*SYMBOL_LIST_MAX);
     if (symbol_list == NULL) {
         printf("malloc fail,return\n");
@@ -126,7 +131,7 @@ int parse_sysfile(char * filename,Tsym *p_parse_result,int *valid_count)
     memset(buff,0x00,sizeof(buff));
     fseek(pfile,0,SEEK_END);
     int filesize = ftell(pfile);
-    printf("file size %d\n",filesize);
+    //printf("file size %d\n",filesize);
     get_exec_len(pfile,filesize,&origin_len,&nopadlen);
     //printf("origin len %d,no pad len %d\n",origin_len,nopadlen);
 
@@ -140,7 +145,7 @@ int parse_sysfile(char * filename,Tsym *p_parse_result,int *valid_count)
         if (ftell(pfile) >= nopadlen)
             break; 
     }
-    printf("total valid symbol %d.\n",*valid_count);
+    //printf("total valid symbol %d.\n",*valid_count);
     
     fclose(pfile);
 
@@ -175,11 +180,11 @@ int read_filename(char *pfilename)
     int cnt = readlink("/proc/self/exe", pfilename, MAX_LEN);
     if (cnt < 0 || cnt >= MAX_LEN)
     {
-        printf("***Error***\n");
-        exit(-1);
+        printf("get filename fail\n");
+        return -1;
     }
     
-    printf("current absolute path:%s\n", pfilename);
+    //printf("current absolute path:%s\n", pfilename);
     return 0;
 }
 
@@ -197,10 +202,10 @@ int printsym(Tsym *parse_sym,int len)
 }
 
 
-
+static t_FUNARGS funagrs;
 int parse_cmd(char *command)
 {
-    t_FUNARGS funagrs;
+    
     int begin,end,i;
     int no_arg = 0;
     memset((char *)&funagrs,0x00,sizeof(funagrs));
@@ -225,10 +230,10 @@ int parse_cmd(char *command)
         {
             if (command[i] == ',')
             {
-                printf("i = %d\n",i);
+                //printf("i = %d\n",i);
                 memcpy(buff,&(command[begin]),(i-begin));
                 
-                printf("buff %s\n",buff);
+                //printf("buff %s\n",buff);
                 funagrs.arg[j] = strtol(buff,NULL,0);
                 begin = i+1;
                 j++;
@@ -244,7 +249,6 @@ int parse_cmd(char *command)
         
         j++;
         printf("valid arg number %d\n",j);
-
         printf("commmand %s \n",funagrs.fun_name);
         for (i = 0;i < ARG_MAX;i++)
         {
@@ -265,9 +269,48 @@ int do_exection(char *command)
     }
     else
     {
-        printf("$$ command %s,len %ld\n",command,strlen(command));
-        parse_cmd(command);       
+        //printf("$$ command %s,len %ld\n",command,strlen(command));
+        parse_cmd(command);  
+        int fun_match = 0;
+        fun_match = search_command();   
+        if (!fun_match)
+            run_command(); 
+        else
+            printf("command %s not found\n",command);
+         
     }
 
     return 0;
 }
+
+int search_command()
+{
+    int i = 0;
+    //printf("funagrs.name %s\n",funagrs.fun_name);
+    for (i = 0;i < SYMBOL_LIST_MAX;i++) {
+        //printf("symbol[%d].name %s\n",i,symbol_list[i].name);
+        if (!strncmp(symbol_list[i].name,funagrs.fun_name,
+            strlen(funagrs.fun_name))) {
+            printf("fun %s found\n",funagrs.fun_name);
+            funagrs.addr = symbol_list[i].addr;
+            break;
+        }
+    }
+    if (i == SYMBOL_LIST_MAX) {
+        printf("fun %s not found\n",funagrs.fun_name);
+        return -1;
+    }
+    return 0;
+}
+int run_command()
+{
+    FUNC pfun = NULL;
+    int ret = 0;
+    pfun = funagrs.addr;
+    printf("begin to excute fun %s\n",funagrs.fun_name);
+    ret = pfun(funagrs.arg[0],funagrs.arg[1],funagrs.arg[2],funagrs.arg[3],funagrs.arg[4],funagrs.arg[5],funagrs.arg[6],funagrs.arg[7],funagrs.arg[8]);
+    printf("end fun %s ret %d\n",funagrs.fun_name,ret);
+    return 0;
+
+}
+

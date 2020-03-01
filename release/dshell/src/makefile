@@ -10,7 +10,7 @@ AGENT = libagent.a
 UTILITY = dshell
 
 $(AGENT) : agent.o server.o
-	$(AR) cr $(AGENT) agent.o server.o 
+	$(AR) rcs $(AGENT) agent.o server.o 
 
 $(UTILITY) : dshell.o client.o
 	$(CC) dshell.o  client.o -o dshell -lpthread

@@ -37,10 +37,10 @@ void * client_process(void *arg) {
     if (connect(sockfd, (struct sockaddr *)&server_addr,sizeof(struct sockaddr_in)) == -1){
         perror("connect error"); 
         exit(1);
-     } 
-     printf("client connect ok\n");
+    } 
+    printf("client connect ok\n");
     static int send_flag = 0;
-     while(1) {         
+    while(1) {         
         
         int len, bytes_sent; 
         send_flag = 0;
@@ -49,12 +49,12 @@ void * client_process(void *arg) {
         {
             len = strlen(inputbuff);
             memcpy(msg,inputbuff,len);
-            printf("\nBegin send...\n"); 
+            //printf("\nBegin send...\n"); 
             //sent to the server
             if(send(sockfd, msg,len,0) == -1){ 
                 perror("send error"); 
             }
-            printf("done...\n"); 
+            //printf("done...\n"); 
             send_flag = 1;
 
         }
