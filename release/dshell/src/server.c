@@ -29,13 +29,13 @@ void * server_process(void *args)
 
     /*create a socket.type is AF_INET,sock_stream*/
     server_sockfd = socket(AF_INET,SOCK_STREAM,0);
-    
+
     server_sockaddr.sin_family = AF_INET;
     server_sockaddr.sin_port = htons(PORT);
     server_sockaddr.sin_addr.s_addr = htonl(INADDR_ANY);
 
     server_len = sizeof(server_sockaddr);
-    
+
     int on;
     setsockopt(server_sockfd, SOL_SOCKET, SO_REUSEADDR,&on,sizeof(on));
     /*bind a socket or rename a sockt*/
@@ -58,10 +58,9 @@ void * server_process(void *args)
     memcpy(buf,greeting,sizeof(greeting));
 
     while(1) {
-        
         if (connected == 0) {
-            if((client_sockfd = accept(server_sockfd, 
-                (struct sockaddr*)&client_sockaddr, 
+            if((client_sockfd = accept(server_sockfd,
+                (struct sockaddr*)&client_sockaddr,
                 &client_len)) == -1){
                     printf("connect error");
                 exit(1);
@@ -69,19 +68,20 @@ void * server_process(void *args)
                 connected = 1;
                 printf("create connection successfully\n");
             }
-        } else {            
+        } else {
             msg_recv_ok = 0;
-            if ((numbytes = recv(client_sockfd, buf, MAXDATASIZE, 0)) == -1){  
-                perror("recv"); 
+            if ((numbytes = recv(client_sockfd, buf, MAXDATASIZE, 0)) == -1){
+                perror("recv");
                 exit(1);
-            } else if (numbytes > 0) {                 
-                buf[numbytes] = '\0'; 
+            } else if (numbytes > 0) {
+                buf[numbytes] = '\0';
                 memcpy(commandbuff,buf,sizeof(buf));
                 msg_recv_ok = 1;
-                //printf("Received: %s\n",buf);    
-                sleep(1);            
+                //printf("Received: %s\n",buf);
+                sleep(1);
             }
         }
     }
     return 0;
 }
+

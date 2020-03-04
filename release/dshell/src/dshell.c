@@ -31,8 +31,8 @@ int main()
     if (err != 0)
         printf("can't create thread: %s\n", strerror(err));
     printwc();
-    captureinput(); 
-    return 0; // should never return 
+    captureinput();
+    return 0; // should never return
 }
 
 
@@ -46,7 +46,7 @@ int printwc()
 
 int do_exection(char *command)
 {
-    
+
     if ((!strcmp(command,"quit")) || (!strcmp(command,"exit")))
     {
         printf("quit dshell\n");
@@ -55,7 +55,7 @@ int do_exection(char *command)
     else
     {
         printf("$$ command %s,len %ld\n",command,strlen(command));
-        //parse_cmd(command);       
+        //parse_cmd(command);
     }
 
     return 0;
@@ -70,7 +70,7 @@ int readinput(char *buf)
 {
     int count = 0;
     char c;
-    
+
     while ((c = getchar() )!= '\n') {
             buf[count] = c;
             count++;
@@ -81,16 +81,16 @@ int readinput(char *buf)
 }
 
 int captureinput()
-{    
-    char c;  
+{
+    char c;
     memset(inputbuff,0,sizeof(inputbuff));
     while(1) {
-        printf("$$ ");        
+        printf("$$ ");
         msg_ready = 0;
         readinput(&inputbuff[0]);
         msg_ready = 1;
-        do_exection(&inputbuff[0]);  
-        sleep(1);      
+        do_exection(&inputbuff[0]);
+        sleep(1);
     }
     return 0;
 }
