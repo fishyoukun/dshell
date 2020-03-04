@@ -4,6 +4,7 @@
 #include <signal.h>
 #include <string.h>
 #include <pthread.h>
+#include <sys/socket.h>
 
 int printwc();
 int captureinput();
@@ -18,7 +19,7 @@ char inputbuff[80];
 char filename[MAX_LEN];
 int msg_ready;
 
-
+extern int sockfd;
 extern void * client_process(void *arg);
 int main()
 {
@@ -50,6 +51,7 @@ int do_exection(char *command)
     if ((!strcmp(command,"quit")) || (!strcmp(command,"exit")))
     {
         printf("quit dshell\n");
+        close(sockfd);
         exit(0);
     }
     else

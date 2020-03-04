@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <sys/shm.h>
+#include <errno.h>
 
 #define PORT 22468
 #define KEY 123
@@ -54,8 +55,6 @@ void * server_process(void *args)
     pid_t ppid,pid;
     int numbytes,sockfd;
     static int connected = 0;
-    char greeting[] = "You have conected the server";
-    memcpy(buf,greeting,sizeof(greeting));
 
     while(1) {
         if (connected == 0) {
@@ -70,9 +69,13 @@ void * server_process(void *args)
             }
         } else {
             msg_recv_ok = 0;
-            if ((numbytes = recv(client_sockfd, buf, MAXDATASIZE, 0)) == -1){
+            if ((numbytes = recv(client_sockfd, buf, MAXDATASIZE, 0)) <= 0){
                 perror("recv");
-                exit(1);
+                if (errno != EINTR) {
+                    close(client_sockfd);
+                    connected = 0;
+                }
+                //exit(1);
             } else if (numbytes > 0) {
                 buf[numbytes] = '\0';
                 memcpy(commandbuff,buf,sizeof(buf));

@@ -16,9 +16,10 @@
 extern char inputbuff[80];
 extern int msg_ready;
 int readinput(char *buf);
+int sockfd = 0;
 
 void * client_process(void *arg) {
-    int sockfd, numbytes;
+    int numbytes;
     char buf[MAXDATASIZE];
     struct sockaddr_in server_addr;
     printf("client up\n");
