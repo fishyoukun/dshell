@@ -22,7 +22,7 @@ void * server_process(void *args)
 
     char buf[100];
     memset(buf,0,100);
-    printf("server up\n");
+    printf("\nserver up\n");
     int server_sockfd,client_sockfd;
     socklen_t server_len,client_len;
 
@@ -70,7 +70,7 @@ void * server_process(void *args)
         } else {
             msg_recv_ok = 0;
             if ((numbytes = recv(client_sockfd, buf, MAXDATASIZE, 0)) <= 0){
-                perror("recv");
+                //perror("recv");
                 if (errno != EINTR) {
                     close(client_sockfd);
                     connected = 0;
@@ -85,6 +85,6 @@ void * server_process(void *args)
             }
         }
     }
-    return 0;
+    return 0; //never return
 }
 
