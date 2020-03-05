@@ -65,6 +65,7 @@ int do_exection(char *command)
 void signal_process(int sigID)
 {
     printf("dshell abort\n");
+    close(sockfd);
     abort();
     return;
 }
