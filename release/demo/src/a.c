@@ -19,6 +19,13 @@ int add(int a,int b)
     return c;
 }
 
+int dec(int a, int b)
+{
+    int c = a -b;
+    printf("%d - %d = %d\n",a,b,c);
+    return c;
+}
+
 int dumphex(unsigned char *start,unsigned int length)
 {
     int i = 0;

@@ -171,7 +171,7 @@ int parse_sym(char *buff,Tsym *p_parse_result,int *length)
         return -5;
     }
 
-    tsym.addr = (void *)strtoull(buff,&end,16);
+    tsym.addr = (void *)(intptr_t)(strtoull(buff,&end,16));
     //printf("addr = 0x%016llx,",(unsigned long long)tsym.addr);
     tsym.type = *(++end);
     //printf("type = %c,",tsym.type);
@@ -202,10 +202,10 @@ int printsym(Tsym *parse_sym,int len)
     int i ;
     printf("========valid sym number %d ==============\n",len);
     for (i = 0;i < len;i++){
-        printf("%02d>>",i);
-        printf("addr = 0x%016llx,",(unsigned long long)parse_sym[i].addr);
+        printf("%04d>>",i);
+        printf("addr = %16p,",parse_sym[i].addr);
         printf("type = %c,",parse_sym[i].type);
-        printf("name = %s",parse_sym[i].name);
+        printf("name = %s\n",parse_sym[i].name);
     }
     return 0;
 }
